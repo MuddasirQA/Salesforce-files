@@ -1,0 +1,207 @@
+<apex:page standardController="Invoice__c"  showHeader="true" applyBodyTag="false" renderAs="pdf" >
+
+
+
+    <head>
+        <style type="text/css"> 
+            body { font-family: 'sans-serif'; }
+           h1 { color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 25px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center;  margin-bottom: 10px;}
+            .title{ margin-right: 10%;}
+            .header{color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 25px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center };
+            .sub-header{margin-right: 10%;font-weight: bold;}
+            .header2text{font: 15px;  }
+            .billingInfo{  }
+            .billingText{font: 10px;  }
+            .MailingAddress{display:inline-block; padding-right: 56px; border-style: solid; padding: 10px; margin-bottom: 16px; }
+            .billing{display:inline-block; border-style: solid; padding: 10px;  margin-bottom: 16px; margin-left: 10%;}
+            .ServiceInvoice{margin-bottom: 16px;}
+           
+            .instructorinfo{margin-top: 10%; }
+           
+           
+            .line-item-table{ padding-bottom: 16px; }
+            
+            
+            .Location{margin-bottom: 16px;}
+        </style>
+    </head>
+
+    
+    <body>
+
+    
+        <div class="title">
+            <h1>Expense Invoice</h1>
+        </div>
+
+        <div class="header">
+            <h2>Force Training</h2>
+        </div>
+        <div class="sub-header">
+        <apex:pageBlock>
+            <apex:pageBlockSection columns="1" >
+                <apex:pageBlockSectionItem>
+
+                    <apex:outputLabel style = "padding: 3px;" value="Invoice Date: " />
+                        <apex:outputPanel>
+                            <div class="header2text">
+                            <apex:outputField style = "padding: 3px;" value="{!Invoice__c.Invoice_Due_Date__c }" /><br />
+                            </div>
+                        </apex:outputPanel>
+
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock> 
+        <apex:pageBlock>
+            <apex:pageBlockSection columns="1" >
+                <apex:pageBlockSectionItem>
+                    <apex:outputLabel style = "padding: 5px;" value="Invoice Number: " />
+                        <apex:outputPanel>
+                            <div class="header2text">
+                            <apex:outputField value="{!Invoice__c.Name }" /><br />
+                            </div>
+                        </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>        
+        </div>
+       
+        <div class="billingInfo">            
+            <div class= "MailingAddress">
+              <p> <b>Mailing Address </b> </p>
+    
+                <div class="billingText">
+                  <apex:outputText value="{!Invoice__c.Course__r.Account.Name}" /><br />
+                  <apex:outputText value="{!Invoice__c.Course__r.Account.ShippingStreet}"/><br />
+                  <apex:outputText value="{!Invoice__c.Course__r.Account.ShippingCity }"/><br />
+                  <apex:outputText value="{!Invoice__c.Course__r.Account.ShippingState}"/> <br />   
+                  <apex:outputText value="{!Invoice__c.Course__r.Account.ShippingCountry }"/><br />
+                  <apex:outputText value="{!Invoice__c.Course__r.Account.ShippingPostalCode}"/><br />
+                </div>
+     
+            </div>
+            <div class="billing">
+                <p> <b> Billing Address </b> </p>
+    
+                  <div class="billingText">
+                    <apex:outputText value="{!Invoice__c.Course__r.Account.Name }" /><br />
+                    <apex:outputText value="{!Invoice__c.Course__r.Account.BillingStreet}"/><br />
+                    <apex:outputText value="{!Invoice__c.Course__r.Account.BillingCity}"/><br />
+                    <apex:outputText value="{!Invoice__c.Course__r.Account.BillingState}"/> <br />   
+                    <apex:outputText value="{!Invoice__c.Course__r.Account.BillingCountry}"/><br />
+                    <apex:outputText value="{!Invoice__c.Course__r.Account.BillingPostalCode}"/><br />
+                  </div>
+                                        
+            </div>
+          </div> 
+          <div class = "Location">
+            <apex:pageBlock >
+                <apex:pageBlockTable value = "{!Invoice__c.Course__r}" var="location" width ="100%"  border="1px solid"> 
+                    <div class = "item">
+                        
+                  <apex:column style = "padding: 10px;" value="{!location.Location__c}"/>
+                </div>
+            
+                </apex:pageBlockTable>
+    
+            </apex:pageBlock>
+        </div>
+        <div class="ServiceInvoice">
+            <apex:pageBlock>
+                    
+                        <apex:pageBlockTable value="{!Invoice__c}" var="ci"   width="100%" border="5px solid black" > 
+                                <apex:column style = "padding: 10px;" value="{!ci.Invoice_Due_Date__c}" />
+                                <apex:column style = "padding: 10px;" value="{!ci.Course__r.Name}" />
+                                <apex:column style = "padding: 10px;" value="{!ci.Course__r.VAT_Rate__c}" />
+                                
+
+                        </apex:pageBlockTable>    
+
+            </apex:pageBlock>
+        </div>
+        <div class = "line-item-table">
+            <apex:pageBlock >
+                <apex:pageBlockTable value = "{!Invoice__c.Invoice_Line_Items__r}" var="lineitems" width ="100%"  border="1px solid"> 
+                    <div class = "item">
+                        
+                    <apex:column style = "padding: 10px;" value="{!lineitems.Date__c}"/>
+                </div>
+                <div class = "item">
+                    <apex:column style = "padding: 10px;" value="{!lineitems.RecordTypeId}"/>
+                </div>
+                <div class = "item">
+                    <apex:column style = "padding: 10px;"  value="{!lineitems.Instructor_day_rate__c}"/>
+                    
+                </div>
+                </apex:pageBlockTable>
+    
+            </apex:pageBlock>
+        </div>
+        <apex:pageBlock >
+            
+        
+            <apex:pageBlockTable style = "padding: 10px;" value="{!Invoice__c}" var="total" width ="100%"  border="1px solid" >	
+
+                    <apex:column style = "padding: 10px;" value="{!total.Sub_Total__c}"/>
+                    <apex:column style = "padding: 10px;" value="{!total.Expense_Invoice_total__c}"/>
+                    <apex:column style = "padding: 10px;" value="{!total.Expense_VAT_amount__c}"/>
+
+                 
+                 
+             
+                    
+            </apex:pageBlockTable> 
+        </apex:pageBlock>
+
+
+        
+        <div class="instructorinfo">
+            <apex:pageBlock>
+
+                <apex:pageBlockSection columns="1" >
+          
+                    <div class = "instructorName">
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel  value="Consultant Name: "/>
+                            <apex:outputPanel  >
+                                <div class="instructorDetailText">
+                                <apex:outputField value="{!Invoice__c.Course__r.Instructor__r.Name }" />
+                                
+                                </div>
+                            </apex:outputPanel>
+                    </apex:pageBlockSectionItem> 
+                    </div>
+
+                     <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Bank Name: "/>
+                            <apex:outputPanel  >
+                                <div class="instructorText">
+                                <apex:outputField value="{!Invoice__c.Course__r.Instructor__r.Bank_Branch__c }" />
+                                
+                                </div>
+                            </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Bank Address: "/>
+                            <apex:outputPanel  >
+                                <div class="instructorText">
+                                <apex:outputField value="{!Invoice__c.Course__r.Instructor__r.Bank_Address__c }" />
+                                
+                                </div>
+                            </apex:outputPanel>
+                    </apex:pageBlockSectionItem> 
+
+
+                        
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </div>
+
+        
+
+    </body>
+
+    
+
+</apex:page>
