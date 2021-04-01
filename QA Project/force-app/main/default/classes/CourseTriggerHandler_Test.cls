@@ -2,7 +2,7 @@
 public with sharing class CourseTriggerHandler_Test {
 
         @testSetup
-        private static void testSetupObjectDataFactory() {
+        private static void testSetup() {
     
             List<Opportunity> opps = new List<Opportunity>();
             for(Integer i =0; i < 201; i++){
