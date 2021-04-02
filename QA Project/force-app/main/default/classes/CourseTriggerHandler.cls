@@ -8,11 +8,11 @@ public with sharing class CourseTriggerHandler {
           
         for(Opportunity course : instructoremails){
             Messaging.SingleEmailMessage newemail = new Messaging.SingleEmailMessage();
-            List<String> toAdresses = new List<String>();
+            List<String> theAdresses = new List<String>();
             if(course.StageName == 'Cancelled'){
-                String body = 'Dear: ' + Course.Instructor__r.name + ', <br> Your course of type: ' + Course.Name + '. Starting on ' + course.Start_Date__c + 'has been cancelled';
-                toAdresses.add(Course.Instructor__r.Email);
-                newemail.setToAddresses(toAdresses);
+                String body = 'Dear: ' + Course.Instructor__r.name + ' Your schedulled course  ' + Course.Name + ' Beginning on' + course.Start_Date__c + 'has been cancelled';
+                theAdresses.add(Course.Instructor__r.Email);
+                newemail.setToAddresses(theAdresses);
                 newemail.setSubject('Cancelled Course');
                 newemail.setHtmlBody(body);
                 emails.add(newemail);
@@ -22,9 +22,9 @@ public with sharing class CourseTriggerHandler {
             else if(oldMap==Null||oldMap.get(course.Id)==Null){
                 if(course.StageName == 'Scheduled'){
         
-                    String body = 'Dear: ' + Course.Instructor__r.name + ', <br> You have a course of type: ' + Course.Name + '. Starting on ' + course.Start_Date__c + '.';
-                    toAdresses.add(Course.Instructor__r.Email);
-                    newemail.setToAddresses(toAdresses);
+                    String body = 'Dear: ' + Course.Instructor__r.name + 'You have a new course ' + Course.Name + '. Beginning ' + course.Start_Date__c + '.';
+                    theAdresses.add(Course.Instructor__r.Email);
+                    newemail.setToAddresses(theAdresses);
                     newemail.setSubject('Scheduled');
                     newemail.setHtmlBody(body);
                     emails.add(newemail);
