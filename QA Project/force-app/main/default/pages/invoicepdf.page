@@ -10,7 +10,7 @@
             .header{color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 25px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center };
             .sub-header{margin-right: 10%;font-weight: bold;}
             .header2text{font: 15px;  }
-            .billingInfo{  }
+            
             .billingText{font: 10px;  }
             .MailingAddress{display:inline-block; padding-right: 56px; border-style: solid; padding: 10px; margin-bottom: 16px; }
             .billing{display:inline-block; border-style: solid; padding: 10px;  margin-bottom: 16px; margin-left: 10%;}
