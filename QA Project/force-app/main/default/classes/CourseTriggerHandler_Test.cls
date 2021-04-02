@@ -74,22 +74,22 @@ public with sharing class CourseTriggerHandler_Test {
         
             
             for(Integer i = 0; i<201; i++){
-                Invoice__c serviceInvoices = new Invoice__c(Name='abc', RecordTypeId = serviceRecordType, Course__c = '0064L000002a4zkQAA', Invoice_Date__c = Date.today());
+                Invoice__c serviceInvoices = new Invoice__c(Name='invoice', RecordTypeId = serviceRecordType, Course__c = '0064L000002a4zkQAA', Invoice_Date__c = Date.today());
                 invoiceList.add(serviceInvoices);
             }
             insert invoiceList;
         
             Test.startTest();
             Test.stopTest();
-                List<Invoice__c> recordA = [SELECT Name FROM Invoice__c ORDER BY Name ASC LIMIT 1 ];
-                List<Invoice__c> recordB = [SELECT Name FROM Invoice__c ORDER BY Name DESC LIMIT 1 ];
-                String getRecordAName = recordA[0].Name;
-                String getRecordBName = recordB[0].Name;
+                List<Invoice__c> invA = [SELECT Name FROM Invoice__c ORDER BY Name ASC LIMIT 1 ];
+                List<Invoice__c> invZ = [SELECT Name FROM Invoice__c ORDER BY Name DESC LIMIT 1 ];
+                String getFirstInvoice = invA[0].Name;
+                String getLastLastInvoice =  invZ[0].Name;
 
           
                 System.assertEquals(201, [SELECT count() FROM Invoice__c]);
-                System.assertEquals('INV-{0001}', getRecordAName);
-                System.assertEquals('INV-{0201}', getRecordBName);
+                System.assertEquals('INV-{0001}', getFirstInvoice);
+                System.assertEquals('INV-{0201}', getLastLastInvoice);
                 
 
         }
@@ -109,15 +109,15 @@ public with sharing class CourseTriggerHandler_Test {
         
             Test.startTest();
             Test.stopTest();
-                List<Invoice__c> recordA = [SELECT Name FROM Invoice__c ORDER BY Name ASC LIMIT 1 ];
-                List<Invoice__c> recordB = [SELECT Name FROM Invoice__c ORDER BY Name DESC LIMIT 1 ];
-                String getRecordAName = recordA[0].Name;
-                String getRecordBName = recordB[0].Name;
+                List<Invoice__c> invA  = [SELECT Name FROM Invoice__c ORDER BY Name ASC LIMIT 1 ];
+                List<Invoice__c> invZ = [SELECT Name FROM Invoice__c ORDER BY Name DESC LIMIT 1 ];
+                String getFirstInvoice = invA[0].Name;
+                String getLastInvoice = invZ[0].Name;
 
           
                 System.assertEquals(201, [SELECT count() FROM Invoice__c]);
-                System.assertEquals('EXPINV-{0001}', getRecordAName);
-                System.assertEquals('EXPINV-{0201}', getRecordBName);
+                System.assertEquals('EXPINV-{0001}', getFirstInvoice);
+                System.assertEquals('EXPINV-{0201}', getLastInvoice);
                 
 
         }
